@@ -14,6 +14,7 @@ interface IState {
   colors: string[];
   txt: string;
   submitting: boolean;
+  innerError: boolean;
 }
 export class App extends React.Component<any, IState> {
   constructor(props) {
@@ -24,6 +25,7 @@ export class App extends React.Component<any, IState> {
       colors: [],
       txt: '',
       submitting: false,
+      innerError: false,
     }
   }
   public componentDidMount() {
@@ -60,9 +62,10 @@ export class App extends React.Component<any, IState> {
     const contract = this.state.contract!;
     const color = this.state.txt;
     if (color === '' || !color) { return; }
-    this.setState({submitting: true}, () => {
+    this.setState({ submitting: true, innerError: false }, () => {
       contract.methods.mint(this.state.txt).send({ from: this.state.account })
-        .once('receipt', (receipt) => this.setState({ colors: [...this.state.colors, color ], txt: '', submitting: false}));
+        .once('receipt', (receipt) => this.setState({ colors: [...this.state.colors, color ], txt: '', submitting: false}))
+        .once('error', (error, receipt) => { this.setState({ submitting: false, innerError: true })});
     })
   }
   public render() {
@@ -73,6 +76,7 @@ export class App extends React.Component<any, IState> {
       <div>account: {this.state.account}</div>
       {this.state.colors.map(it => <h1 key={`col-${it}`} style={{color: it}}>{it}</h1>)}
 
+      { this.state.innerError && <div className={css.error}>An error occurred with the contract </div>}
       <form style={{marginTop: 60}} onSubmit={e => this.submit(e)}>
         <input type={"text"} disabled={this.state.submitting} placeholder={'e.g. #ffffff'} value={this.state.txt} onChange={e => this.setState({ txt: e.target.value })} />
         <button type={'submit'} disabled={this.state.submitting}>Submit</button>

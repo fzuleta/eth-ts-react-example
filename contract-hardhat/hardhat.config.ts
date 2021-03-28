@@ -12,17 +12,16 @@ task("accounts", "Prints the list of accounts", async (args, hre) => {
   }
 });
 
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
-
 export default {
   solidity: "0.8.3",
-  
-  // abiExporter: {
-  //   // path: './data/abi',
-  //   clear: true,
-  //   flat: true,
-  //   only: [':ERC20$'],
-  //   spacing: 2
-  // }
+  networks: {
+    ganache: {
+      url: "http://localhost:7545",
+      chainId: 1337,
+      accounts: ['d2faed43e6763b00b60b5706ba70db19ac5b79d33193b889daa929d1397a7ee7']
+    }
+  },
+  mocha: {
+    timeout: 20000
+  }
 };

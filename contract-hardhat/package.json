@@ -6,7 +6,7 @@
   "scripts": {
     "test": "hardhat test",
     "compile": "hardhat compile",
-    "deploy:color": "hardhat run ./scripts/color.ts --network localhost"
+    "deploy:color:ganache": "hardhat run ./scripts/color.ts --network ganache"
   },
   "author": "",
   "license": "ISC",

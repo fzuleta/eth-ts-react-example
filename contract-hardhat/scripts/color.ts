@@ -12,7 +12,7 @@ async function main() {
   
   const [deployer] = await ethers.getSigners();
 
-  console.log("Deploying contracts with the account:", deployer.getAddress());
+  console.log("Deploying contracts with the account:", await deployer.getAddress());
   
   console.log("Account balance:", (await deployer.getBalance()).toString());
 

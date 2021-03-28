@@ -13,7 +13,7 @@ contract Color is ERC721PresetMinterPauserAutoId {
   }
   function mint(string memory _color) public {
     console.log("Trying to mint %s color", _color);
-    require(!_colorExists[_color]);
+    require(!_colorExists[_color], "Color already minted");
     colors.push(_color);
     uint _id = colors.length - 1;
     _mint(msg.sender, _id);

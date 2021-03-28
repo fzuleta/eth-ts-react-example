@@ -1,6 +1,6 @@
 declare namespace AppCssNamespace {
   export interface IAppCss {
-    hello: string;
+    error: string;
   }
 }
 

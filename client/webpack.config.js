@@ -3,7 +3,7 @@ const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
@@ -36,9 +36,9 @@ module.exports = {
       {
         test: /\.css$/i,
         use: [
-          MiniCssExtractPlugin.loader,
-          // 'style-loader',
-          // '@teamsupercell/typings-for-css-modules-loader', 
+          // MiniCssExtractPlugin.loader,
+          'style-loader',
+          '@teamsupercell/typings-for-css-modules-loader', 
           { loader: 'css-loader', options: {
             modules: {
               localIdentName: '[local]--[hash:base64:5]'
@@ -78,7 +78,7 @@ module.exports = {
     port: 9000,
   },
   plugins: [
-    new MiniCssExtractPlugin(),
+    // new MiniCssExtractPlugin(),
     new CopyPlugin({
       patterns: [
         { from: "bundle", to: "", filter: (resPath) => resPath.indexOf('index.template.html') === -1 },
