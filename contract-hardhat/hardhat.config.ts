@@ -1,6 +1,6 @@
 import { task } from "hardhat/config";
 import "@nomiclabs/hardhat-waffle";
-import "hardhat-abi-exporter";
+import '@typechain/hardhat'
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -20,6 +20,10 @@ export default {
       chainId: 1337,
       accounts: ['d2faed43e6763b00b60b5706ba70db19ac5b79d33193b889daa929d1397a7ee7']
     }
+  },
+  typechain: {
+    outDir: 'types',
+    target: 'ethers-v5',
   },
   mocha: {
     timeout: 20000
