@@ -1,9 +1,8 @@
-import { AnyMxRecord } from 'node:dns';
 import React from 'react';
 import Web3 from 'web3';
 import {Contract} from 'web3-eth-contract';
-// import Color from './abis/Color.json';
-const Color = require('./abis/Color.json')
+const Color = require('./abi/Color.json');
+const contractAddress = require('./abi/Color-address.json');
 import css from './app.css';
 
 declare const web3: Web3;
@@ -14,6 +13,7 @@ interface IState {
   contract?: Contract;
   colors: string[];
   txt: string;
+  submitting: boolean;
 }
 export class App extends React.Component<any, IState> {
   constructor(props) {
@@ -23,6 +23,7 @@ export class App extends React.Component<any, IState> {
       error: '',
       colors: [],
       txt: '',
+      submitting: false,
     }
   }
   public componentDidMount() {
@@ -34,15 +35,7 @@ export class App extends React.Component<any, IState> {
       const accounts = await web3.eth.requestAccounts();
       const account = accounts[0];
 
-      const networkId = await web3.eth.net.getId();
-      const networkData = Color.networks[networkId];
-      if (!networkData) {
-        throw new Error('Contract not deployed');
-        return;
-      }
-      const abi = Color.abi;
-      const address = networkData.address;
-      const contract = new web3.eth.Contract(abi, address);
+      const contract = new web3.eth.Contract(Color.abi, contractAddress.address);
 
       const totalSupply = await contract.methods.totalSupply().call();
       
@@ -62,12 +55,15 @@ export class App extends React.Component<any, IState> {
       }
     }
   }
-  public async submit(e) {
+  public submit(e) {
     e.preventDefault();
     const contract = this.state.contract!;
     const color = this.state.txt;
-    contract.methods.mint(this.state.txt).send({ from: this.state.account })
-      .once('receipt', (receipt) => this.setState({ colors: [...this.state.colors, color ]}));
+    if (color === '' || !color) { return; }
+    this.setState({submitting: true}, () => {
+      contract.methods.mint(this.state.txt).send({ from: this.state.account })
+        .once('receipt', (receipt) => this.setState({ colors: [...this.state.colors, color ], txt: '', submitting: false}));
+    })
   }
   public render() {
     return <>
@@ -78,8 +74,8 @@ export class App extends React.Component<any, IState> {
       {this.state.colors.map(it => <h1 key={`col-${it}`} style={{color: it}}>{it}</h1>)}
 
       <form style={{marginTop: 60}} onSubmit={e => this.submit(e)}>
-        <input type={"text"} placeholder={'e.g. #ffffff'} value={this.state.txt} onChange={e => this.setState({ txt: e.target.value })} />
-        <button type={'submit'}>Submit</button>
+        <input type={"text"} disabled={this.state.submitting} placeholder={'e.g. #ffffff'} value={this.state.txt} onChange={e => this.setState({ txt: e.target.value })} />
+        <button type={'submit'} disabled={this.state.submitting}>Submit</button>
       </form>
     </> }
     </>;

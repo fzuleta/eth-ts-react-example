@@ -18,11 +18,11 @@ task("accounts", "Prints the list of accounts", async (args, hre) => {
 export default {
   solidity: "0.8.3",
   
-  abiExporter: {
-    path: './data/abi',
-    // clear: true,
-    flat: true,
-    only: [':ERC20$'],
-    spacing: 2
-  }
+  // abiExporter: {
+  //   // path: './data/abi',
+  //   clear: true,
+  //   flat: true,
+  //   only: [':ERC20$'],
+  //   spacing: 2
+  // }
 };
