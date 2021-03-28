@@ -1,0 +1,16 @@
+node_modules/
+public/build.js
+newrelic_agent.log
+coverage/
+.nyc_output/
+.idea/
+.vscode/
+report.html
+geo/
+.tmp/
+bundle/js/
+log/
+resources/ssl/*.pem
+!bundle/**/dist
+sourcemapexplorer/
+public

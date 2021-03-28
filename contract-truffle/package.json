@@ -1,0 +1,38 @@
+{
+  "name": "nft",
+  "version": "0.1.0",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.0.0",
+    "bootstrap": "^4.6.0",
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
+    "chai-bignumber": "^3.0.0"
+  },
+  "scripts": {
+    "console": "truffle console",
+    "test": "truffle test ",
+    "migrate": "truffle migrate",
+    "generate-types": "typechain --target=truffle-v5 'build/contracts/*.json'",
+    "compile": "truffle compile && npm run generate-types",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@typechain/truffle-v5": "^4.0.1",
+    "@types/bn.js": "^5.1.0",
+    "@types/chai": "^4.2.15",
+    "@types/mocha": "^8.2.2",
+    "@types/web3": "^1.2.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "truffle": "^5.2.6",
+    "ts-loader": "^8.1.0",
+    "ts-mocha": "^8.0.0",
+    "ts-node": "^9.1.1",
+    "typechain": "^4.0.3",
+    "typescript": "^4.2.3"
+  }
+}
